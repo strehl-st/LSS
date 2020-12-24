@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD3.0//EN"
+
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="cn.edu.zjut.po.Order" table="order_copy1" catalog="lss">
+
+        <id name="order_id" type="integer">
+            <column name="order_id"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="commodity_id" type="int">
+            <column name="commodity_id"/>
+        </property>
+
+        <property name="supplier_id" type="int">
+            <column name="supplier_id"/>
+        </property>
+
+        <property name="retailer_id" type="int">
+            <column name="retailer_id"/>
+        </property>
+        <property name="order_price" type="double">
+            <column name="order_price"/>
+        </property>
+        <property name="buyer" type="string">
+            <column name="buyer" length="255"/>
+        </property>
+
+    </class>
+
+</hibernate-mapping>
