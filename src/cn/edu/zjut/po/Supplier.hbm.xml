@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD3.0//EN"
+
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="cn.edu.zjut.po.Supplier" table="supplier" catalog="lss">
+
+        <id name="supplier_id" type="int">
+            <column name="supplier_id"/>
+            <generator class="increment"/>
+        </id>
+        <property name="user_id" type="int">
+            <column name="user_id"/>
+        </property>
+        <property name="suppliername" type="string">
+            <column name="suppliername" length="255"/>
+        </property>
+        <property name="supplieraddress" type="string">
+            <column name="supplieraddress" length="255"/>
+        </property>
+        <property name="suppliertel" type="string">
+            <column name="suppliertel" length="255"/>
+        </property>
+
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/lss?serverTimezone=UTC"/>
+		<property name="username" value="root"/>
+		<property name="password" value="root"/>
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>cn/edu/zjut/po/User.hbm.xml</value>
+				<value>cn/edu/zjut/po/Order.hbm.xml</value>
+				<value>cn/edu/zjut/po/Retailer.hbm.xml</value>
+				<value>cn/edu/zjut/po/Supplier.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="baseDAO" class="cn.edu.zjut.dao.BaseHibernateDAO">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="userDAO" class="cn.edu.zjut.dao.UserDAO" parent="baseDAO"/>
+	<bean id="orderDAO" class="cn.edu.zjut.dao.OrderDAO" parent="baseDAO"/>
+	<bean id="retailerDAO" class="cn.edu.zjut.dao.RetailerDAO" parent="baseDAO"/>
+	<bean id="supplierDAO" class="cn.edu.zjut.dao.SupplierDAO" parent="baseDAO"/>
+	
+	<bean id="userService" class="cn.edu.zjut.service.UserService">
+		<property name="userDAO" ref="userDAO"/>
+	</bean>
+	<bean id="orderService" class="cn.edu.zjut.service.OrderService">
+		<property name="orderDAO" ref="orderDAO"/>
+	</bean>
+	<bean id="checkorderService" class="cn.edu.zjut.service.CheckOrderService">
+		<property name="userDAO" ref="userDAO" />
+		<property name="orderDAO" ref="orderDAO" />
+		<property name="retailerDAO" ref="retailerDAO" />
+	</bean>
+	
+	<bean id="userAction" class="cn.edu.zjut.action.RegisterAction" scope="prototype">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="loginAction" class="cn.edu.zjut.action.LoginAction" scope="prototype">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="orderSubmit" class="cn.edu.zjut.action.OrderAction" scope="prototype">
+		<property name="orderService" ref="orderService"/>
+	</bean>
+	<bean id="checkorderAction" class="cn.edu.zjut.action.CheckOrderAction" scope="prototype">
+		<property name="checkorderService" ref="checkorderService" />
+	</bean>
+</beans>

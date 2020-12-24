@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD3.0//EN"
+
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="cn.edu.zjut.po.Commodity" table="commodity" catalog="lss">
+
+        <id name="commodity_id" type="integer">
+            <column name="commodity_id"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="commodity_name" type="string">
+            <column name="commodity_name" length="255"/>
+        </property>
+
+        <property name="commodity_price" type="double">
+            <column name="commodity_price"/>
+        </property>
+        <property name="supplier_id" type="int">
+            <column name="supplier_id"/>
+        </property>
+        <property name="commodity_inventory" type="int">
+            <column name="commodity_inventory"/>
+        </property>
+        <property name="commodity_information" type="string">
+            <column name="commodity_information" length="255"/>
+        </property>
+
+    </class>
+
+</hibernate-mapping>
